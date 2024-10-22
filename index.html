@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Web3 DApp</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<style>
+			body {
+				font-family: 'Arial', sans-serif;
+				margin: 0;
+				padding: 0;
+				background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+				color: #343a40;
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				animation: fadeIn 1s ease-in-out;
+			}
+
+			header {
+				background-color: #282c34;
+				/* 更换为深色背景 */
+				padding: 15px 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+				transition: background-color 0.3s;
+			}
+
+			header:hover {
+				background-color: #1f2226;
+				/* 悬停效果 */
+			}
+
+			header h1 {
+				color: white;
+				margin: 0;
+				font-size: 24px;
+			}
+
+			nav {
+				display: flex;
+				gap: 20px;
+			}
+
+			nav a {
+				color: white;
+				text-decoration: none;
+				font-size: 18px;
+				transition: color 0.3s;
+				position: relative;
+			}
+
+			nav a::after {
+				content: '';
+				display: block;
+				width: 0;
+				height: 2px;
+				background: #ffdd57;
+				transition: width 0.3s;
+				position: absolute;
+				bottom: -4px;
+				left: 0;
+			}
+
+			nav a:hover {
+				color: #ffdd57;
+			}
+
+			nav a:hover::after {
+				width: 100%;
+			}
+
+			.content {
+				flex: 1;
+				max-width: 800px;
+				margin: 50px auto;
+				padding: 30px;
+				background: white;
+				border-radius: 8px;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+				animation: slideIn 0.5s ease forwards;
+				opacity: 0;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.content::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(255, 255, 255, 0.2);
+				animation: pulse 5s infinite;
+				border-radius: 8px;
+				z-index: 0;
+			}
+
+			.content h2 {
+				margin-bottom: 20px;
+				font-size: 28px;
+				color: #007bff;
+				position: relative;
+				z-index: 1;
+			}
+
+			.content p {
+				line-height: 1.6;
+				font-size: 18px;
+				position: relative;
+				z-index: 1;
+			}
+
+			.connect-button {
+				background-color: #007bff;
+				/* 按钮背景色 */
+				color: white;
+				/* 按钮文字颜色 */
+				border: none;
+				/* 去除边框 */
+				border-radius: 5px;
+				/* 圆角 */
+				padding: 10px 20px;
+				/* 内边距 */
+				font-size: 16px;
+				/* 字体大小 */
+				cursor: pointer;
+				/* 鼠标指针 */
+				transition: background-color 0.3s, transform 0.3s;
+				/* 动效 */
+			}
+
+			.connect-button:hover {
+				background-color: #0056b3;
+				/* 悬停背景色 */
+				transform: scale(1.05);
+				/* 悬停时放大效果 */
+			}
+
+			.footer {
+				text-align: center;
+				padding: 15px 0;
+				background-color: #282c34;
+				/* 更换为深色背景 */
+				color: white;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+
+			/* 弹出提示框样式 */
+			.toast {
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				background: #333;
+				color: white;
+				padding: 15px;
+				border-radius: 5px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+				display: none;
+				/* 默认隐藏 */
+				z-index: 1000;
+				animation: slideIn 0.5s ease;
+			}
+
+			@media (max-width: 600px) {
+				header {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+
+				nav {
+					flex-direction: column;
+					gap: 10px;
+				}
+
+				.connect-button {
+					width: 100%;
+					text-align: center;
+				}
+
+				.content {
+					padding: 20px;
+				}
+
+				header h1 {
+					font-size: 22px;
+				}
+
+				.content h2 {
+					font-size: 24px;
+				}
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+
+				to {
+					opacity: 1;
+				}
+			}
+
+			@keyframes slideIn {
+				from {
+					transform: translateY(20px);
+					opacity: 0;
+				}
+
+				to {
+					transform: translateY(0);
+					opacity: 1;
+				}
+			}
+
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+					opacity: 0.2;
+				}
+
+				50% {
+					transform: scale(1.05);
+					opacity: 0.5;
+				}
+
+				100% {
+					transform: scale(1);
+					opacity: 0.2;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<h1>My Web3 DApp</h1>
+			<nav>
+				<a href="#about">About</a>
+				<a href="#features">Features</a>
+				<a href="#contact">Contact</a>
+			</nav>
+			<button class="connect-button" id="connectButton">Connect Wallet</button>
+		</header>
+
+		<div class="content">
+			<h2>Welcome to My Web3 DApp</h2>
+			<p>This is a simple Web3 application using HTML, CSS, and JavaScript. You can connect your MetaMask wallet
+				to interact with the blockchain.</p>
+			<p>Explore the features and benefits of decentralized applications!</p>
+		</div>
+
+		<div class="footer">
+			<p>&copy; 2024 My Web3 DApp. All rights reserved.</p>
+		</div>
+
+		<div class="toast" id="toastMessage"></div>
+
+		<script>
+			let currentAccount = null;
+
+			// 检查用户是否安装了 MetaMask
+			async function checkMetaMask() {
+				if (typeof window.ethereum !== 'undefined') {
+					console.log('MetaMask is installed!');
+					return true;
+				} else {
+					showToast('MetaMask is not installed. Please install it to use this DApp.');
+					return false;
+				}
+			}
+
+			// 连接钱包
+			async function connectWallet() {
+				const isMetaMaskInstalled = await checkMetaMask();
+				if (!isMetaMaskInstalled) return;
+
+				try {
+					const accounts = await window.ethereum.request({
+						method: 'eth_requestAccounts'
+					});
+					currentAccount = accounts[0];
+					console.log('Connected account:', currentAccount);
+					updateConnectButton(currentAccount);
+					showToast('Connected: ' + currentAccount);
+				} catch (error) {
+					console.error('Error connecting to MetaMask:', error);
+					showToast('Error connecting to wallet. Please try again.');
+				}
+			}
+
+			// 更新连接按钮
+			function updateConnectButton(account) {
+				const shortAddress = account.slice(0, 6) + '...' + account.slice(-4);
+				const button = document.getElementById('connectButton');
+				button.textContent = shortAddress;
+				button.onclick = disconnectWallet; // 绑定断开连接函数
+			}
+
+			// 断开连接钱包
+			function disconnectWallet() {
+				currentAccount = null;
+				const button = document.getElementById('connectButton');
+				button.textContent = 'Connect Wallet';
+				button.onclick = connectWallet; // 重新绑定连接函数
+				showToast('Disconnected from wallet.');
+			}
+
+			// 显示自定义提示框
+			function showToast(message) {
+				const toast = document.getElementById('toastMessage');
+				toast.textContent = message;
+				toast.style.display = 'block'; // 显示提示框
+
+				// 设置提示框自动隐藏
+				setTimeout(() => {
+					toast.style.display = 'none';
+				}, 3000); // 3秒后隐藏
+			}
+
+			// 连接按钮点击事件
+			document.getElementById('connectButton').onclick = connectWallet;
+
+			// 在页面加载时检查 MetaMask
+			window.onload = checkMetaMask;
+		</script>
+	</body>
+
+</html>
